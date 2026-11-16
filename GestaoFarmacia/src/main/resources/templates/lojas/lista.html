@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Lojas · Gestão Farmácia</title></head>
+<body>
+<section>
+    <div class="cabecalho-pagina">
+        <div><h1>Lojas</h1><p class="subtitulo">Cadastro das lojas que realizam pedidos.</p></div>
+        <a class="botao" th:href="@{/lojas/nova}">Nova loja</a>
+    </div>
+    <div class="vazio" th:if="${#lists.isEmpty(lojas)}">Nenhuma loja cadastrada.</div>
+    <div class="tabela-rolagem" th:unless="${#lists.isEmpty(lojas)}">
+        <table class="tabela-empilhavel">
+            <thead><tr><th>Nome</th><th>Localização</th><th>Ações</th></tr></thead>
+            <tbody>
+            <tr th:each="loja : ${lojas}">
+                <td data-rotulo="Nome" th:text="${loja.nome}">Nome</td>
+                <td data-rotulo="Localização" th:text="${loja.localizacao}">Local</td>
+                <td data-rotulo="Ações">
+                    <div class="acoes">
+                        <a class="botao botao-secundario botao-pequeno" th:href="@{/lojas/{id}/painel(id=${loja.id})}">Abrir</a>
+                        <a class="botao botao-secundario botao-pequeno" th:href="@{/lojas/{id}/editar(id=${loja.id})}">Editar</a>
+                        <form th:action="@{/lojas/{id}/excluir(id=${loja.id})}" method="post"
+                              onsubmit="return confirm('Excluir esta loja e seus pedidos?');">
+                            <button type="submit" class="botao botao-perigo botao-pequeno">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

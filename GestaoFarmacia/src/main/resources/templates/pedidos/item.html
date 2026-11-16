@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Item do pedido · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/lojas/{id}/pedidos(id=${loja.id})}">Pedidos</a> /
+        <a th:href="@{/lojas/{lojaId}/pedidos/{id}(lojaId=${loja.id},id=${pedido.id})}" th:text="'#' + ${pedido.id}">#1</a> / Item</p>
+    <h1 th:text="${item.nomeMedicamento}">Item</h1>
+    <div class="cartao">
+        <dl class="detalhes">
+            <dt>Pedido</dt><dd th:text="'#' + ${pedido.id}">#1</dd>
+            <dt>Medicamento</dt>
+            <dd><a th:href="@{/lojas/{lojaId}/catalogo/{id}(lojaId=${loja.id},id=${item.medicamentoId})}" th:text="${item.nomeMedicamento}">Nome</a></dd>
+            <dt>Quantidade</dt><dd th:text="${item.quantidade}">1</dd>
+            <dt>Preço de venda</dt><dd th:text="${#numbers.formatCurrency(item.precoVenda)}">R$ 0,00</dd>
+            <dt>Subtotal</dt><dd th:text="${#numbers.formatCurrency(item.subtotal)}">R$ 0,00</dd>
+            <dt>Situação</dt>
+            <dd th:text="${item.estoqueSuficiente} ? 'Estoque suficiente' : 'Reabastecer estoque'">Situação</dd>
+        </dl>
+    </div>
+    <p><a class="botao botao-secundario" th:href="@{/lojas/{lojaId}/pedidos/{id}(lojaId=${loja.id},id=${pedido.id})}">Voltar ao pedido</a></p>
+</section>
+</body>
+</html>

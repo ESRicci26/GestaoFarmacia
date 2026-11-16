@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Loja · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/lojas}">Lojas</a> / <span th:text="${titulo}">Nova</span></p>
+    <h1 th:text="${titulo}">Nova loja</h1>
+    <form class="formulario" th:action="@{${acao}}" th:object="${formulario}" method="post" novalidate>
+        <div class="campo">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}" maxlength="100" required>
+            <p class="erro-campo" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
+        </div>
+        <div class="campo">
+            <label for="localizacao">Localização</label>
+            <input type="text" id="localizacao" th:field="*{localizacao}" maxlength="150" required>
+            <p class="erro-campo" th:if="${#fields.hasErrors('localizacao')}" th:errors="*{localizacao}"></p>
+        </div>
+        <div class="acoes">
+            <button type="submit" class="botao">Salvar</button>
+            <a class="botao botao-secundario" th:href="@{/lojas}">Cancelar</a>
+        </div>
+    </form>
+</section>
+</body>
+</html>

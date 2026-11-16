@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Medicamentos · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/acesso/farmacia}">Farmácias</a> / <span th:text="${farmacia.nome}">Farmácia</span></p>
+    <div class="cabecalho-pagina">
+        <div><h1 th:text="${farmacia.nome}">Farmácia</h1><p class="subtitulo">Catálogo de medicamentos.</p></div>
+        <a class="botao" th:href="@{/farmacias/{id}/medicamentos/novo(id=${farmacia.id})}">Novo medicamento</a>
+    </div>
+    <div class="vazio" th:if="${#lists.isEmpty(medicamentos)}">Nenhum medicamento cadastrado nesta farmácia.</div>
+    <div class="tabela-rolagem" th:unless="${#lists.isEmpty(medicamentos)}">
+        <table class="tabela-empilhavel">
+            <thead><tr><th>Código</th><th>Nome</th><th>Tipo</th><th class="num">Estoque</th><th class="num">Preço</th><th>Validade</th><th>Ações</th></tr></thead>
+            <tbody>
+            <tr th:each="medicamento : ${medicamentos}">
+                <td data-rotulo="Código" th:text="${medicamento.id}">1</td>
+                <td data-rotulo="Nome" th:text="${medicamento.nome}">Nome</td>
+                <td data-rotulo="Tipo" th:text="${medicamento.tipo}">Tipo</td>
+                <td data-rotulo="Estoque" class="num" th:text="${medicamento.quantidadeDisponivel}">0</td>
+                <td data-rotulo="Preço" class="num" th:text="${#numbers.formatCurrency(medicamento.preco)}">R$ 0,00</td>
+                <td data-rotulo="Validade">
+                    <span th:text="${#temporals.format(medicamento.dataValidade, 'dd/MM/yyyy')}">01/01/2030</span>
+                    <span class="etiqueta etiqueta-erro" th:if="${medicamento.estaVencido()}">Vencido</span>
+                </td>
+                <td data-rotulo="Ações">
+                    <div class="acoes">
+                        <a class="botao botao-secundario botao-pequeno" th:href="@{/medicamentos/{id}/editar(id=${medicamento.id})}">Editar</a>
+                        <form th:action="@{/medicamentos/{id}/excluir(id=${medicamento.id})}" method="post"
+                              onsubmit="return confirm('Excluir este medicamento?');">
+                            <button type="submit" class="botao botao-perigo botao-pequeno">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

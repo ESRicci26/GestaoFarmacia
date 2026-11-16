@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Início · Gestão Farmácia</title></head>
+<body>
+<section>
+    <div class="destaque-inicio">
+        <h1>Do catálogo da farmácia ao pedido da loja</h1>
+        <p class="subtitulo">Cadastre farmácias e medicamentos, monte pedidos para as lojas e acompanhe o estoque.</p>
+    </div>
+    <div class="grade grade-3">
+        <a class="cartao cartao-link" th:href="@{/admin}">
+            <h2>Administração do sistema</h2>
+            <p>Cadastro de farmácias e lojas.</p>
+        </a>
+        <a class="cartao cartao-link" th:href="@{/acesso/farmacia}">
+            <h2>Área da farmácia</h2>
+            <p>Catálogo de medicamentos, preços, validade e estoque.</p>
+        </a>
+        <a class="cartao cartao-link" th:href="@{/acesso/loja}">
+            <h2>Área da loja</h2>
+            <p>Navegue pelo catálogo, monte o carrinho e finalize pedidos.</p>
+        </a>
+    </div>
+</section>
+</body>
+</html>

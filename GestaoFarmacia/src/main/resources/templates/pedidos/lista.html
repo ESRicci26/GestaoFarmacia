@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Pedidos · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/lojas/{id}/painel(id=${loja.id})}" th:text="${loja.nome}">Loja</a> / Pedidos</p>
+    <div class="cabecalho-pagina">
+        <div><h1>Pedidos</h1><p class="subtitulo">Pedidos finalizados por esta loja.</p></div>
+        <a class="botao" th:href="@{/lojas/{id}/catalogo(id=${loja.id})}">Novo pedido</a>
+    </div>
+    <div class="vazio" th:if="${#lists.isEmpty(pedidos)}">Nenhum pedido realizado.</div>
+    <div class="tabela-rolagem" th:unless="${#lists.isEmpty(pedidos)}">
+        <table class="tabela-empilhavel">
+            <thead><tr><th>Pedido</th><th>Data</th><th class="num">Itens</th><th class="num">Total</th><th>Ações</th></tr></thead>
+            <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td data-rotulo="Pedido" th:text="'#' + ${pedido.id}">#1</td>
+                <td data-rotulo="Data" th:text="${#temporals.format(pedido.criadoEm, 'dd/MM/yyyy HH:mm')}">01/01/2030 10:00</td>
+                <td data-rotulo="Itens" class="num" th:text="${#lists.size(pedido.itens)}">1</td>
+                <td data-rotulo="Total" class="num" th:text="${#numbers.formatCurrency(pedido.total)}">R$ 0,00</td>
+                <td data-rotulo="Ações">
+                    <a class="botao botao-secundario botao-pequeno"
+                       th:href="@{/lojas/{lojaId}/pedidos/{id}(lojaId=${loja.id},id=${pedido.id})}">Detalhes</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

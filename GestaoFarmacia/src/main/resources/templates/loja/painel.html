@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Painel da loja · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/acesso/loja}">Lojas</a> / <span th:text="${loja.nome}">Loja</span></p>
+    <div class="cabecalho-pagina"><div><h1 th:text="${loja.nome}">Loja</h1>
+        <p class="subtitulo" th:text="${loja.localizacao}">Localização</p></div></div>
+    <div class="grade grade-2">
+        <div class="cartao">
+            <h2>Catálogo e carrinho</h2>
+            <p>Pesquise medicamentos, defina o preço de venda e monte o pedido.</p>
+            <a class="botao" th:href="@{/lojas/{id}/catalogo(id=${loja.id})}">Navegar pelo catálogo</a>
+        </div>
+        <div class="cartao">
+            <h2>Pedidos realizados</h2>
+            <p>Consulte os pedidos finalizados e verifique a necessidade de reposição.</p>
+            <a class="botao" th:href="@{/lojas/{id}/pedidos(id=${loja.id})}">Ver pedidos</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

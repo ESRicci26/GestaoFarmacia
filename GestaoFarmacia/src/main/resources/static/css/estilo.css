@@ -1,0 +1,160 @@
+/* Gestão Farmácia — estilos globais (layout responsivo, mobile-first) */
+:root {
+    --papel: #f4f6f2;
+    --superficie: #ffffff;
+    --tinta: #17302a;
+    --tinta-suave: #4d625b;
+    --verde: #1f6b57;
+    --verde-escuro: #134a3c;
+    --verde-claro: #e1eee7;
+    --linha: #d3ddd6;
+    --erro: #a1302c;
+    --erro-claro: #f8e6e4;
+    --aviso: #8c5a12;
+    --aviso-claro: #f9eed8;
+    --raio: 6px;
+    --fonte-titulo: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --fonte-texto: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--fonte-texto);
+    line-height: 1.5;
+}
+
+h1, h2, h3 { font-family: var(--fonte-titulo); line-height: 1.2; margin: 0 0 .5rem; }
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.3rem; }
+a { color: var(--verde-escuro); }
+
+:focus-visible { outline: 3px solid #e0a526; outline-offset: 2px; }
+
+/* ---------- Topo e navegação ---------- */
+.topo { background: var(--verde-escuro); color: #fff; }
+.topo-interno {
+    max-width: 1100px; margin: 0 auto; padding: .75rem 1rem;
+    display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem;
+}
+.marca {
+    display: flex; align-items: center; gap: .6rem;
+    color: #fff; text-decoration: none; font-family: var(--fonte-titulo); font-size: 1.25rem;
+}
+.marca-cruz { position: relative; width: 22px; height: 22px; flex: none; }
+.marca-cruz::before, .marca-cruz::after { content: ""; position: absolute; background: #fff; border-radius: 2px; }
+.marca-cruz::before { left: 8px; top: 0; width: 6px; height: 22px; }
+.marca-cruz::after { left: 0; top: 8px; width: 22px; height: 6px; }
+.menu { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.menu a { color: #d6ebe2; text-decoration: none; padding: .25rem 0; }
+.menu a:hover { color: #fff; text-decoration: underline; }
+
+/* ---------- Página ---------- */
+.pagina { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+.rodape { text-align: center; color: var(--tinta-suave); font-size: .85rem; padding: 1.5rem 1rem; }
+.cabecalho-pagina {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: .75rem; margin-bottom: 1rem;
+}
+.subtitulo { margin: 0; color: var(--tinta-suave); }
+.migalhas { font-size: .9rem; margin-bottom: .75rem; }
+
+/* ---------- Alertas ---------- */
+.alerta { padding: .75rem 1rem; border-radius: var(--raio); margin-bottom: 1rem; border: 1px solid; }
+.alerta-sucesso { background: var(--verde-claro); border-color: #a9cdbb; color: var(--verde-escuro); }
+.alerta-erro { background: var(--erro-claro); border-color: #e2b5b1; color: var(--erro); }
+
+/* ---------- Botões ---------- */
+.botao {
+    display: inline-block; padding: .55rem 1rem; border-radius: var(--raio);
+    border: 1px solid var(--verde); background: var(--verde); color: #fff;
+    font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; text-align: center;
+}
+.botao:hover { background: var(--verde-escuro); }
+.botao-secundario { background: transparent; color: var(--verde-escuro); }
+.botao-secundario:hover { background: var(--verde-claro); }
+.botao-perigo { background: transparent; border-color: var(--erro); color: var(--erro); }
+.botao-perigo:hover { background: var(--erro); color: #fff; }
+.botao-pequeno { padding: .3rem .65rem; font-size: .9rem; }
+.botao[disabled] { opacity: .5; cursor: not-allowed; }
+.acoes { display: flex; flex-wrap: wrap; gap: .4rem; }
+.acoes form { margin: 0; }
+
+/* ---------- Cartões e blocos ---------- */
+.grade { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.cartao {
+    background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio);
+    padding: 1.25rem; display: flex; flex-direction: column; gap: .5rem;
+}
+.cartao p { margin: 0; color: var(--tinta-suave); }
+.cartao .botao { margin-top: auto; align-self: flex-start; }
+.cartao-link { text-decoration: none; color: inherit; transition: border-color .15s; }
+.cartao-link:hover { border-color: var(--verde); }
+.vazio { padding: 2rem 1rem; text-align: center; color: var(--tinta-suave); background: var(--superficie);
+    border: 1px dashed var(--linha); border-radius: var(--raio); }
+
+.destaque-inicio { padding: 1.5rem 0 1.75rem; max-width: 40rem; }
+.destaque-inicio h1 { font-size: 2.1rem; }
+
+/* ---------- Tabelas ---------- */
+.tabela-rolagem { overflow-x: auto; background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio); }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: .65rem .8rem; text-align: left; border-bottom: 1px solid var(--linha); vertical-align: middle; }
+thead th { background: var(--verde-claro); font-size: .9rem; }
+tbody tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+.etiqueta { display: inline-block; padding: .1rem .5rem; border-radius: 999px; font-size: .8rem; font-weight: 600; }
+.etiqueta-ok { background: var(--verde-claro); color: var(--verde-escuro); }
+.etiqueta-alerta { background: var(--aviso-claro); color: var(--aviso); }
+.etiqueta-erro { background: var(--erro-claro); color: var(--erro); }
+
+/* ---------- Formulários ---------- */
+.formulario { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio);
+    padding: 1.25rem; max-width: 720px; display: grid; gap: 1rem; }
+.campo { display: flex; flex-direction: column; gap: .3rem; }
+.campo label { font-weight: 600; font-size: .92rem; }
+input[type=text], input[type=number], input[type=date], select {
+    width: 100%; padding: .55rem .65rem; border: 1px solid #9fb2a8; border-radius: var(--raio);
+    font: inherit; background: #fff; color: var(--tinta);
+}
+.erro-campo { color: var(--erro); font-size: .85rem; margin: 0; }
+.linha-campos { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+
+/* ---------- Catálogo da loja ---------- */
+.catalogo { display: grid; gap: 1.25rem; grid-template-columns: 1fr; align-items: start; }
+.filtro { display: grid; gap: .6rem; grid-template-columns: 1fr; margin-bottom: 1rem; }
+.form-item { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.form-item input { width: 5.5rem; }
+.carrinho { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio); padding: 1rem; }
+.carrinho ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.carrinho li { padding: .6rem 0; border-bottom: 1px solid var(--linha); }
+.carrinho-total { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: .75rem; }
+.detalhes { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1.25rem; margin: 0; }
+.detalhes dt { font-weight: 600; color: var(--tinta-suave); }
+.detalhes dd { margin: 0; }
+
+/* ---------- Telas médias e grandes ---------- */
+@media (min-width: 640px) {
+    .grade-2 { grid-template-columns: repeat(2, 1fr); }
+    .grade-3 { grid-template-columns: repeat(3, 1fr); }
+    .linha-campos { grid-template-columns: 1fr 1fr; }
+    .filtro { grid-template-columns: 1fr 2fr auto; align-items: end; }
+}
+@media (min-width: 960px) {
+    .catalogo { grid-template-columns: minmax(0, 1fr) 320px; }
+    .carrinho { position: sticky; top: 1rem; }
+}
+
+/* ---------- Celulares: tabelas viram listas empilhadas ---------- */
+@media (max-width: 639px) {
+    .tabela-empilhavel thead { position: absolute; left: -9999px; }
+    .tabela-empilhavel tr { display: block; border-bottom: 2px solid var(--linha); padding: .5rem 0; }
+    .tabela-empilhavel tbody tr:last-child { border-bottom: 0; }
+    .tabela-empilhavel td { display: flex; justify-content: space-between; gap: 1rem; border: 0; padding: .3rem .8rem; text-align: right; }
+    .tabela-empilhavel td::before { content: attr(data-rotulo); font-weight: 600; color: var(--tinta-suave); text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

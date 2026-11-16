@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Medicamento · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/acesso/farmacia}">Farmácias</a> /
+        <a th:href="@{/farmacias/{id}/medicamentos(id=${farmacia.id})}" th:text="${farmacia.nome}">Farmácia</a> /
+        <span th:text="${titulo}">Novo</span></p>
+    <h1 th:text="${titulo}">Novo medicamento</h1>
+    <form class="formulario" th:action="@{${acao}}" th:object="${formulario}" method="post" novalidate>
+        <div class="alerta alerta-erro" th:if="${#fields.hasGlobalErrors()}">
+            <p th:each="erro : ${#fields.globalErrors()}" th:text="${erro}" style="margin:0"></p>
+        </div>
+        <div class="campo">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}" maxlength="100" required>
+            <p class="erro-campo" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
+        </div>
+        <div class="linha-campos">
+            <div class="campo">
+                <label for="tipo">Tipo</label>
+                <input type="text" id="tipo" th:field="*{tipo}" maxlength="50" required>
+                <p class="erro-campo" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></p>
+            </div>
+            <div class="campo">
+                <label for="composicao">Composição</label>
+                <input type="text" id="composicao" th:field="*{composicao}" maxlength="150" required>
+                <p class="erro-campo" th:if="${#fields.hasErrors('composicao')}" th:errors="*{composicao}"></p>
+            </div>
+        </div>
+        <div class="campo">
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao" th:field="*{descricao}" maxlength="255" required>
+            <p class="erro-campo" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></p>
+        </div>
+        <div class="linha-campos">
+            <div class="campo">
+                <label for="quantidadeDisponivel">Quantidade em estoque</label>
+                <input type="number" id="quantidadeDisponivel" th:field="*{quantidadeDisponivel}" min="0" step="1" required>
+                <p class="erro-campo" th:if="${#fields.hasErrors('quantidadeDisponivel')}" th:errors="*{quantidadeDisponivel}"></p>
+            </div>
+            <div class="campo">
+                <label for="preco">Preço do fornecedor (R$)</label>
+                <input type="number" id="preco" th:field="*{preco}" min="0" step="0.01" required>
+                <p class="erro-campo" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></p>
+            </div>
+        </div>
+        <div class="linha-campos">
+            <div class="campo">
+                <label for="dataFabricacao">Data de fabricação</label>
+                <input type="date" id="dataFabricacao" th:field="*{dataFabricacao}" required>
+                <p class="erro-campo" th:if="${#fields.hasErrors('dataFabricacao')}" th:errors="*{dataFabricacao}"></p>
+            </div>
+            <div class="campo">
+                <label for="dataValidade">Data de validade</label>
+                <input type="date" id="dataValidade" th:field="*{dataValidade}" required>
+                <p class="erro-campo" th:if="${#fields.hasErrors('dataValidade')}" th:errors="*{dataValidade}"></p>
+            </div>
+        </div>
+        <div class="acoes">
+            <button type="submit" class="botao">Salvar</button>
+            <a class="botao botao-secundario" th:href="@{/farmacias/{id}/medicamentos(id=${farmacia.id})}">Cancelar</a>
+        </div>
+    </form>
+</section>
+</body>
+</html>

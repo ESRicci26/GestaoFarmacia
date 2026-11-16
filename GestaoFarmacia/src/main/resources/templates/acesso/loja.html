@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Área da loja · Gestão Farmácia</title></head>
+<body>
+<section>
+    <div class="cabecalho-pagina"><div><h1>Área da loja</h1>
+        <p class="subtitulo">Escolha a loja para navegar pelo catálogo e realizar pedidos.</p></div></div>
+    <div class="vazio" th:if="${#lists.isEmpty(lojas)}">
+        Nenhuma loja cadastrada. <a th:href="@{/lojas/nova}">Cadastrar loja</a>
+    </div>
+    <div class="grade grade-3" th:unless="${#lists.isEmpty(lojas)}">
+        <a class="cartao cartao-link" th:each="loja : ${lojas}" th:href="@{/lojas/{id}/painel(id=${loja.id})}">
+            <h2 th:text="${loja.nome}">Loja</h2>
+            <p th:text="${loja.localizacao}">Localização</p>
+        </a>
+    </div>
+</section>
+</body>
+</html>

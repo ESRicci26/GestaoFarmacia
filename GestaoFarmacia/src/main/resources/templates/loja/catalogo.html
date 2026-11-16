@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Catálogo · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/lojas/{id}/painel(id=${loja.id})}" th:text="${loja.nome}">Loja</a> / Catálogo</p>
+    <div class="cabecalho-pagina"><div><h1>Catálogo de medicamentos</h1>
+        <p class="subtitulo">Pesquise por código ou nome e adicione itens ao carrinho.</p></div></div>
+
+    <div class="catalogo">
+        <div>
+            <form class="filtro" method="get" th:action="@{/lojas/{id}/catalogo(id=${loja.id})}">
+                <div class="campo">
+                    <label for="farmaciaId">Farmácia</label>
+                    <select id="farmaciaId" name="farmaciaId">
+                        <option th:each="farmacia : ${farmacias}" th:value="${farmacia.id}" th:text="${farmacia.nome}"
+                                th:selected="${farmacia.id == farmaciaSelecionadaId}">Farmácia</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="busca">Pesquisar (código ou nome, em todas as farmácias)</label>
+                    <input type="text" id="busca" name="busca" th:value="${busca}">
+                </div>
+                <button type="submit" class="botao">Filtrar</button>
+            </form>
+
+            <div class="vazio" th:if="${#lists.isEmpty(medicamentos)}">Nenhum medicamento encontrado.</div>
+            <div class="tabela-rolagem" th:unless="${#lists.isEmpty(medicamentos)}">
+                <table class="tabela-empilhavel">
+                    <thead><tr><th>Código</th><th>Medicamento</th><th class="num">Disponível</th><th class="num">Preço fornecedor</th><th>Adicionar ao carrinho</th></tr></thead>
+                    <tbody>
+                    <tr th:each="medicamento : ${medicamentos}"
+                        th:with="livre=${medicamento.quantidadeDisponivel - carrinho.quantidadeReservada(medicamento.id)}">
+                        <td data-rotulo="Código" th:text="${medicamento.id}">1</td>
+                        <td data-rotulo="Medicamento">
+                            <a th:href="@{/lojas/{lojaId}/catalogo/{id}(lojaId=${loja.id},id=${medicamento.id})}" th:text="${medicamento.nome}">Nome</a>
+                            <span class="etiqueta etiqueta-erro" th:if="${medicamento.estaVencido()}">Vencido</span>
+                        </td>
+                        <td data-rotulo="Disponível" class="num" th:text="${livre}">0</td>
+                        <td data-rotulo="Preço fornecedor" class="num" th:text="${#numbers.formatCurrency(medicamento.preco)}">R$ 0,00</td>
+                        <td data-rotulo="Adicionar">
+                            <form class="form-item" method="post" th:action="@{/lojas/{id}/carrinho/itens(id=${loja.id})}" th:if="${livre > 0}">
+                                <input type="hidden" name="medicamentoId" th:value="${medicamento.id}">
+                                <input type="hidden" name="farmaciaId" th:value="${farmaciaSelecionadaId}">
+                                <input type="hidden" name="busca" th:value="${busca}">
+                                <input type="number" name="quantidade" value="1" min="1" th:max="${livre}" aria-label="Quantidade" required>
+                                <input type="number" name="precoVenda" th:value="${medicamento.preco}" th:min="${medicamento.preco}" step="0.01" aria-label="Preço de venda" required>
+                                <button type="submit" class="botao botao-pequeno">Adicionar</button>
+                            </form>
+                            <span class="etiqueta etiqueta-alerta" th:unless="${livre > 0}">Sem estoque</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <aside class="carrinho" aria-label="Carrinho">
+            <h2>Carrinho</h2>
+            <p class="subtitulo" th:if="${carrinho.vazio}">Nenhum item adicionado.</p>
+            <ul th:unless="${carrinho.vazio}">
+                <li th:each="item : ${carrinho.itens}">
+                    <strong th:text="${item.nomeMedicamento}">Nome</strong><br>
+                    <span th:text="${item.quantidade} + ' × ' + ${#numbers.formatCurrency(item.precoVenda)}">1 × R$ 1,00</span>
+                    = <strong th:text="${#numbers.formatCurrency(item.subtotal)}">R$ 1,00</strong>
+                    <form class="form-item" method="post"
+                          th:action="@{/lojas/{id}/carrinho/itens/{medId}/quantidade(id=${loja.id},medId=${item.medicamentoId})}">
+                        <input type="hidden" name="farmaciaId" th:value="${farmaciaSelecionadaId}">
+                        <input type="hidden" name="busca" th:value="${busca}">
+                        <input type="number" name="novaQuantidade" th:value="${item.quantidade}" min="1" aria-label="Nova quantidade" required>
+                        <button type="submit" class="botao botao-secundario botao-pequeno">Alterar</button>
+                    </form>
+                    <form method="post" style="margin-top:.35rem"
+                          th:action="@{/lojas/{id}/carrinho/itens/{medId}/remover(id=${loja.id},medId=${item.medicamentoId})}">
+                        <input type="hidden" name="farmaciaId" th:value="${farmaciaSelecionadaId}">
+                        <input type="hidden" name="busca" th:value="${busca}">
+                        <button type="submit" class="botao botao-perigo botao-pequeno">Remover</button>
+                    </form>
+                </li>
+            </ul>
+            <div class="carrinho-total" th:unless="${carrinho.vazio}">
+                <span>Total</span><span th:text="${#numbers.formatCurrency(carrinho.total)}">R$ 0,00</span>
+            </div>
+            <form method="post" th:action="@{/lojas/{id}/carrinho/finalizar(id=${loja.id})}" th:unless="${carrinho.vazio}">
+                <button type="submit" class="botao" style="width:100%">Finalizar pedido</button>
+            </form>
+        </aside>
+    </div>
+</section>
+</body>
+</html>

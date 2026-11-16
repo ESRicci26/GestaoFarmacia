@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Pedido · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/lojas/{id}/pedidos(id=${loja.id})}">Pedidos</a> / <span th:text="'#' + ${pedido.id}">#1</span></p>
+    <div class="cabecalho-pagina">
+        <div><h1 th:text="'Pedido #' + ${pedido.id}">Pedido</h1>
+            <p class="subtitulo" th:text="${loja.nome} + ' · ' + ${#temporals.format(pedido.criadoEm, 'dd/MM/yyyy HH:mm')}">Loja</p></div>
+        <strong th:text="'Total: ' + ${#numbers.formatCurrency(pedido.total)}">Total</strong>
+    </div>
+    <div class="tabela-rolagem">
+        <table class="tabela-empilhavel">
+            <thead><tr><th>Medicamento</th><th class="num">Preço de venda</th><th class="num">Quantidade</th><th class="num">Subtotal</th><th>Situação</th><th>Ações</th></tr></thead>
+            <tbody>
+            <tr th:each="item : ${pedido.itens}">
+                <td data-rotulo="Medicamento" th:text="${item.nomeMedicamento}">Nome</td>
+                <td data-rotulo="Preço de venda" class="num" th:text="${#numbers.formatCurrency(item.precoVenda)}">R$ 0,00</td>
+                <td data-rotulo="Quantidade" class="num" th:text="${item.quantidade}">1</td>
+                <td data-rotulo="Subtotal" class="num" th:text="${#numbers.formatCurrency(item.subtotal)}">R$ 0,00</td>
+                <td data-rotulo="Situação">
+                    <span class="etiqueta etiqueta-ok" th:if="${item.estoqueSuficiente}">Estoque suficiente</span>
+                    <span class="etiqueta etiqueta-alerta" th:unless="${item.estoqueSuficiente}">Reabastecer estoque</span>
+                </td>
+                <td data-rotulo="Ações">
+                    <a class="botao botao-secundario botao-pequeno"
+                       th:href="@{/lojas/{lojaId}/pedidos/{pedidoId}/itens/{id}(lojaId=${loja.id},pedidoId=${pedido.id},id=${item.id})}">Ver item</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

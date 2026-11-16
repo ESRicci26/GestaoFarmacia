@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Administração · Gestão Farmácia</title></head>
+<body>
+<section>
+    <div class="cabecalho-pagina"><div><h1>Administração do sistema</h1>
+        <p class="subtitulo">Mantenha os cadastros-base utilizados pelas demais áreas.</p></div></div>
+    <div class="grade grade-2">
+        <div class="cartao">
+            <h2>Farmácias</h2>
+            <p>Inclua, edite e exclua farmácias e acesse o catálogo de cada uma.</p>
+            <a class="botao" th:href="@{/farmacias}">Gerenciar farmácias</a>
+        </div>
+        <div class="cartao">
+            <h2>Lojas</h2>
+            <p>Gerencie as lojas que realizam pedidos ao catálogo das farmácias.</p>
+            <a class="botao" th:href="@{/lojas}">Gerenciar lojas</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

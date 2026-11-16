@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Erro · Gestão Farmácia</title></head>
+<body>
+<section>
+    <h1 th:text="${tituloErro}">Erro</h1>
+    <p th:text="${detalheErro}">Detalhe do erro.</p>
+    <a class="botao" th:href="@{/}">Voltar ao início</a>
+</section>
+</body>
+</html>

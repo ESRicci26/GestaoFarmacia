@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(tituloDaPagina, conteudoDaPagina)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:replace="${tituloDaPagina}">Gestão Farmácia</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<header class="topo">
+    <div class="topo-interno">
+        <a class="marca" th:href="@{/}"><span class="marca-cruz" aria-hidden="true"></span>Gestão Farmácia</a>
+        <nav class="menu" aria-label="Navegação principal">
+            <a th:href="@{/admin}">Administração</a>
+            <a th:href="@{/acesso/farmacia}">Farmácias</a>
+            <a th:href="@{/acesso/loja}">Lojas</a>
+        </nav>
+    </div>
+</header>
+
+<main class="pagina">
+    <div th:if="${mensagemSucesso}" class="alerta alerta-sucesso" role="status" th:text="${mensagemSucesso}"></div>
+    <div th:if="${mensagemErro}" class="alerta alerta-erro" role="alert" th:text="${mensagemErro}"></div>
+    <th:block th:replace="${conteudoDaPagina}">Conteúdo</th:block>
+</main>
+
+<footer class="rodape">Gestão Farmácia &middot; br.com.javaricci</footer>
+</body>
+</html>

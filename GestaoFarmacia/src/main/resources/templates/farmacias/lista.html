@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Farmácias · Gestão Farmácia</title></head>
+<body>
+<section>
+    <div class="cabecalho-pagina">
+        <div><h1>Farmácias</h1><p class="subtitulo">Cadastro de farmácias fornecedoras.</p></div>
+        <a class="botao" th:href="@{/farmacias/nova}">Nova farmácia</a>
+    </div>
+    <div class="vazio" th:if="${#lists.isEmpty(farmacias)}">Nenhuma farmácia cadastrada.</div>
+    <div class="tabela-rolagem" th:unless="${#lists.isEmpty(farmacias)}">
+        <table class="tabela-empilhavel">
+            <thead><tr><th>Nome</th><th>Localização</th><th>Ações</th></tr></thead>
+            <tbody>
+            <tr th:each="farmacia : ${farmacias}">
+                <td data-rotulo="Nome" th:text="${farmacia.nome}">Nome</td>
+                <td data-rotulo="Localização" th:text="${farmacia.localizacao} ?: '—'">Local</td>
+                <td data-rotulo="Ações">
+                    <div class="acoes">
+                        <a class="botao botao-secundario botao-pequeno" th:href="@{/farmacias/{id}/medicamentos(id=${farmacia.id})}">Medicamentos</a>
+                        <a class="botao botao-secundario botao-pequeno" th:href="@{/farmacias/{id}/editar(id=${farmacia.id})}">Editar</a>
+                        <form th:action="@{/farmacias/{id}/excluir(id=${farmacia.id})}" method="post"
+                              onsubmit="return confirm('Excluir esta farmácia e todo o seu catálogo?');">
+                            <button type="submit" class="botao botao-perigo botao-pequeno">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

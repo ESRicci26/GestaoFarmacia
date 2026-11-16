@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/layout :: layout(~{::title}, ~{::section})}">
+<head><title>Detalhes do medicamento · Gestão Farmácia</title></head>
+<body>
+<section>
+    <p class="migalhas"><a th:href="@{/lojas/{id}/catalogo(id=${loja.id})}">Catálogo</a> / <span th:text="${medicamento.nome}">Medicamento</span></p>
+    <h1 th:text="${medicamento.nome}">Medicamento</h1>
+    <div class="cartao">
+        <dl class="detalhes">
+            <dt>Código</dt><dd th:text="${medicamento.id}">1</dd>
+            <dt>Farmácia</dt><dd th:text="${farmacia.nome}">Farmácia</dd>
+            <dt>Tipo</dt><dd th:text="${medicamento.tipo}">Tipo</dd>
+            <dt>Composição</dt><dd th:text="${medicamento.composicao}">Composição</dd>
+            <dt>Descrição</dt><dd th:text="${medicamento.descricao}">Descrição</dd>
+            <dt>Estoque</dt><dd th:text="${medicamento.quantidadeDisponivel}">0</dd>
+            <dt>Preço do fornecedor</dt><dd th:text="${#numbers.formatCurrency(medicamento.preco)}">R$ 0,00</dd>
+            <dt>Fabricação</dt><dd th:text="${#temporals.format(medicamento.dataFabricacao, 'dd/MM/yyyy')}">01/01/2025</dd>
+            <dt>Validade</dt>
+            <dd>
+                <span th:text="${#temporals.format(medicamento.dataValidade, 'dd/MM/yyyy')}">01/01/2030</span>
+                <span class="etiqueta etiqueta-erro" th:if="${medicamento.estaVencido()}">Vencido</span>
+            </dd>
+        </dl>
+    </div>
+    <p><a class="botao botao-secundario" th:href="@{/lojas/{id}/catalogo(id=${loja.id})}">Voltar ao catálogo</a></p>
+</section>
+</body>
+</html>
